@@ -8,7 +8,7 @@
 
 ## Description
 
-App to be able to start a project with NestJs, with connection to Mysql and MongoDB.
+SMS - API, microservice for sending sms.
 
 ## Installation
 
@@ -33,9 +33,24 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Support
+## Steps
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Ingresar [Twilio](https://www.twilio.com)
+
+Se tiene que crear una cuenta en Twilio y configurar el número para el envio de los mensajes, además de obtener el SID y el TOKEN para poder hacer el envío correspondiente
+
+### Envio de SMSs
+
+```bash
+EndPoint: POST - url/api/v1/send
+{
+  "numero": "Número de celular al cual se enviará el SMS, empezando con el codigo del país",
+  "mensaje": "Mensaje a enviar",
+  "funcionarioId": id del funcionario que envia el sms,
+  "aplicacion": "codigo de la aplicación de la que se envia el mensaje"
+  "guardar": truo or false,
+}
+```
 
 ## Stay in touch
 
@@ -44,4 +59,4 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 
 ## License
 
-APP-NESTJS API [MIT licensed](LICENSE).
+SMS - API [MIT licensed](LICENSE).
