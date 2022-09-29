@@ -1,9 +1,21 @@
-import { Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-export type ProyectDocument = Proyect & Document;
+export type SmsDocument = Sms & Document;
 
 @Schema()
-export class Proyect {}
+export class Sms {
+  @Prop({ type: Date, default: Date.now() })
+  createdAt: Date;
 
-export const ProyectSchema = SchemaFactory.createForClass(Proyect);
+  @Prop({ type: Object })
+  origen: any;
+
+  @Prop({ type: Object })
+  destino: any;
+
+  @Prop({ type: Boolean })
+  enviado: boolean;
+}
+
+export const SmsSchema = SchemaFactory.createForClass(Sms);

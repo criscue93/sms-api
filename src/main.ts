@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as express from 'express';
+import { VersioningType } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -16,8 +17,12 @@ async function bootstrap() {
     }),
   );
 
+  app.enableVersioning({
+    type: VersioningType.URI,
+  });
+
   const config = new DocumentBuilder()
-    .setTitle('PROYECT - API')
+    .setTitle('SMS - API')
     .addBearerAuth()
     .setDescription(
       'Basado en principios REST, las APIs devuelve metadatos JSON.',
@@ -29,7 +34,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
 
   SwaggerModule.setup('api', app, document, {
-    customSiteTitle: 'Documentación',
+    customSiteTitle: 'SMS - API',
     customfavIcon: 'https://nestjs.com/img/logo_text.svg',
     customCss: '.swagger-ui .topbar { display: none }',
   });
