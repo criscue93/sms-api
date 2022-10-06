@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, Res, Version } from '@nestjs/common';
 import { Response } from 'express';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AppService } from './app.service';
 import { smsDTO } from './dto/sms.dto';
 import { validate } from 'class-validator';
@@ -26,6 +26,24 @@ export class AppController {
   @ApiOperation({
     summary: 'Servicio enviar mensajes por correo',
   })
+  @ApiBody({
+    schema: {
+      properties: {
+        celular: {
+          type: 'number',
+          example: 59164654986,
+        },
+        mensaje: {
+          type: 'string',
+          example: 'Mensaje de prueba',
+        },
+        guardar: {
+          type: 'boolean',
+          example: true,
+        },
+      },
+    },
+  })
   async sendMessage(@Res() res: Response, @Body() body: smsDTO) {
     let response = {
       error: true,
@@ -35,10 +53,8 @@ export class AppController {
     };
 
     const data = new smsDTO();
-    data.numero = body.numero;
+    data.celular = body.celular;
     data.mensaje = body.mensaje;
-    data.funcionarioId = body.funcionarioId;
-    data.aplicacion = body.aplicacion;
     data.guardar = body.guardar;
 
     const valid = await validate(data);
@@ -74,11 +90,9 @@ export class AppController {
           const logs = {
             origen: {
               numero: process.env.FROM_SEND,
-              app_nombre: data.aplicacion,
-              funcionario: data.funcionarioId,
             },
             destino: {
-              numero: data.numero,
+              numero: data.celular,
               mensaje: data.mensaje,
               fichero: false,
             },

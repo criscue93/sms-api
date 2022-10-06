@@ -43,7 +43,7 @@ export class AppService {
       const send = await client.messages.create({
         body: `${data.mensaje}`,
         from: process.env.FROM_SEND,
-        to: `${data.numero}`,
+        to: `${data.celular}`,
       });
 
       if (send) {
